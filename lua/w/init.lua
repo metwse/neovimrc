@@ -1,4 +1,5 @@
-vim.g.mapleader = " "
-vim.g.maplocalleader = "\\"
-
+require("w.set")
 require("w.lazy_init")
+require("w.trailing_whitespace")
+require("w.remap")
+require("w.ident")
