@@ -4,6 +4,15 @@ return {
   dependencies = {
     { "mason-org/mason.nvim", opts = {} },
     { "j-hui/fidget.nvim", opts = {} },
+    {
+      "folke/lazydev.nvim",
+      ft = "lua",
+      opts = {
+        library = {
+          { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+        },
+      },
+    },
     "mason-org/mason-lspconfig.nvim",
     "hrsh7th/cmp-nvim-lsp",
     "hrsh7th/cmp-buffer",
@@ -81,7 +90,7 @@ return {
   end,
 
   init = function()
-    vim.keymap.set('n', 'g?', vim.diagnostic.open_float)
+    vim.keymap.set("n", "g?", vim.diagnostic.open_float)
     vim.diagnostic.config({
       float = {
         focusable = false,
@@ -93,7 +102,7 @@ return {
       },
       severity_sort = true,
       virtual_text = {
-        prefix = '▎'
+        prefix = "▎"
       },
     })
   end
