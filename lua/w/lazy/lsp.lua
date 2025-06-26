@@ -80,6 +80,7 @@ return {
   end,
 
   init = function()
+    vim.keymap.set('n', 'g?', vim.diagnostic.open_float)
     vim.diagnostic.config({
       float = {
         focusable = false,
@@ -88,6 +89,10 @@ return {
         source = "always",
         header = "",
         prefix = "",
+      },
+      severity_sort = true,
+      virtual_text = {
+        prefix = '▎'
       },
     })
   end
