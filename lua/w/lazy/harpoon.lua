@@ -1,3 +1,5 @@
+-- Getting you where you want with the fewest keystrokes.
+
 local harpoon_keys = { "j", "k", "l", ":", "u", "i", "o", "p" }
 
 return {

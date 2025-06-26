@@ -1,9 +1,12 @@
+-- Telescope is a highly extendable fuzzy finder over lists.
+
 return {
   "nvim-telescope/telescope.nvim",
-  branch = "0.1.x",
   dependencies = {
+    -- A Lua module for asynchronous programming using coroutines.
     "nvim-lua/plenary.nvim",
   },
+  branch = "0.1.x",
   lazy = false,
 
   opts = {},

@@ -1,9 +1,16 @@
+-- Configs for Nvim LSP (language server protocol).
+
 return {
   "neovim/nvim-lspconfig",
 
   dependencies = {
+    -- Portable package manager for Neovim that runs everywhere Neovim runs.
+    -- Install and manage LSP servers, DAP servers, linters, and formatters.
     { "mason-org/mason.nvim", opts = {} },
+    -- Extensible UI for Neovim notifications and LSP progress messages.
     { "j-hui/fidget.nvim", opts = {} },
+    -- lazydev.nvim is a plugin that properly configures LuaLS for editing
+    -- your Neovim config by lazily updating your workspace libraries.
     {
       "folke/lazydev.nvim",
       ft = "lua",
@@ -13,14 +20,18 @@ return {
         },
       },
     },
+    -- Extension to mason.nvim that makes it easier to use lspconfig with
+    -- mason.nvim.
     "mason-org/mason-lspconfig.nvim",
+    -- Snippet engine.
+    "L3MON4D3/LuaSnip",
+    --  luasnip completion source for nvim-cmp.
+    "saadparwaiz1/cmp_luasnip",
     "hrsh7th/cmp-nvim-lsp",
     "hrsh7th/cmp-buffer",
     "hrsh7th/cmp-path",
     "hrsh7th/cmp-cmdline",
     "hrsh7th/nvim-cmp",
-    "L3MON4D3/LuaSnip",
-    "saadparwaiz1/cmp_luasnip",
   },
 
   config = function()
