@@ -13,7 +13,6 @@ return {
 
   init = function()
     local harpoon = require("harpoon")
-    local ui = harpoon.ui
 
     vim.keymap.set("n", "<leader>a", function()
       harpoon:list():add()

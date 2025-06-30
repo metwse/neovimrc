@@ -15,7 +15,7 @@ return {
   init = function()
     local telescope = require("telescope")
 
-    function neoclip_register(register, char)
+    local function neoclip_register(register, char)
       vim.keymap.set(
         "n", "<leader>y" .. char,
         telescope.extensions.neoclip[register]
