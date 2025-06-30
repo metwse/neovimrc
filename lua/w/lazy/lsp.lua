@@ -32,6 +32,11 @@ return {
     "hrsh7th/cmp-path",
     "hrsh7th/cmp-cmdline",
     "hrsh7th/nvim-cmp",
+    {
+      "mrcjkb/rustaceanvim",
+      version = '^6',
+      lazy = false,
+    }
   },
 
   config = function()
@@ -57,6 +62,8 @@ return {
             capabilities = capabilities
           })
         end,
+
+        ["rust_analyzer"] = function() end,
 
         ["lua_ls"] = function()
           require("lspconfig")["lua_ls"].setup({
@@ -107,7 +114,6 @@ return {
         focusable = false,
         style = "minimal",
         border = "rounded",
-        source = "always",
         header = "",
         prefix = "",
       },
