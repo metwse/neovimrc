@@ -53,7 +53,6 @@ return {
     require("mason-lspconfig").setup({
       ensure_installed = {
         "lua_ls",
-        "rust_analyzer",
         "pylsp"
       },
       handlers = {
@@ -62,8 +61,6 @@ return {
             capabilities = capabilities
           })
         end,
-
-        ["rust_analyzer"] = function() end,
 
         ["lua_ls"] = function()
           require("lspconfig")["lua_ls"].setup({
@@ -106,6 +103,21 @@ return {
         { name = "buffer" },
       })
     })
+
+    vim.g.rustaceanvim = {
+      server = {
+        default_settings = {
+          ['rust-analyzer'] = {
+            cargo = {
+              features = "all"
+            },
+            check = {
+              command = "clippy"
+            }
+          },
+        },
+      },
+    }
   end,
 
   init = function()
