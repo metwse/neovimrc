@@ -124,11 +124,8 @@ return {
     vim.keymap.set("n", "g?", vim.diagnostic.open_float)
     vim.diagnostic.config({
       float = {
-        focusable = false,
-        style = "minimal",
         border = "rounded",
-        header = "",
-        prefix = "",
+        source = true
       },
       severity_sort = true,
       virtual_text = {
