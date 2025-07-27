@@ -40,9 +40,7 @@ return {
   },
 
   config = function()
-    local cmp = require("cmp")
     local cmp_lsp = require("cmp_nvim_lsp")
-    local cmp_select = { behavior = cmp.SelectBehavior.Select }
 
     local capabilities = vim.tbl_deep_extend(
       "force", {},
@@ -50,39 +48,16 @@ return {
       cmp_lsp.default_capabilities()
     )
 
-    require("mason-lspconfig").setup({
-      ensure_installed = {
-        "lua_ls",
-        "pylsp"
-      },
-      handlers = {
-        function(server_name)
-          require("lspconfig")[server_name].setup({
-            capabilities = capabilities
-          })
-        end,
-
-        ["lua_ls"] = function()
-          require("lspconfig")["lua_ls"].setup({
-            capabilities = capabilities,
-            settings = {
-              Lua = {
-                diagnostics = {
-                  disable = { "missing-fields" },
-                  globals = {
-                    "vim",
-                    "it",
-                    "describe",
-                    "before_each",
-                    "after_each"
-                  },
-                },
-              },
-            },
-          })
-        end,
-      }
+    vim.lsp.config("clangd", {
+      capabilities = capabilities,
     })
+
+    require("mason-lspconfig").setup({
+      ensure_installed = { "lua_ls", "pylsp", "clangd" },
+    })
+
+    local cmp = require("cmp")
+    local cmp_select = { behavior = cmp.SelectBehavior.Select }
 
     cmp.setup({
       snippet = {
