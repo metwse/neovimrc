@@ -48,8 +48,17 @@ return {
       cmp_lsp.default_capabilities()
     )
 
-    vim.lsp.config("clangd", {
+    vim.lsp.config('clangd', {
       capabilities = capabilities,
+      settings = {
+          clangd = {
+              arguments = {
+                  '-log=verbose',
+                  '--background-index',
+                  '--query-driver=/usr/bin/clang++', -- Example: specify your compiler if needed
+              },
+          },
+      },
     })
 
     require("mason-lspconfig").setup({
@@ -84,7 +93,8 @@ return {
         default_settings = {
           ['rust-analyzer'] = {
             cargo = {
-              features = "all"
+              features = "all",
+              targetDir = true
             },
             check = {
               command = "clippy"
@@ -107,5 +117,16 @@ return {
         prefix = "▎"
       },
     })
+
+    vim.api.nvim_create_user_command("RustFeatures", function(opts)
+      vim.cmd.RustAnalyzer { "config", [[
+        { cargo = { features = {
+          ']] .. table.concat(vim.split(opts.args, "','")) .. [['
+        } } }
+      ]] }
+
+      vim.cmd.RustAnalyzer { "restart" }
+    end, { nargs = 1 })
+
   end
 }
