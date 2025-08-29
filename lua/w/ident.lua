@@ -1,7 +1,8 @@
 local wild_tab = { "*.c", "*.h", "Makefile" }
 local wild_2spaces = {
   "*.html", "*.jsx", "*.tsx",
-  "*.js", "*.ts", "*.css", "*.lua"
+  "*.js", "*.ts", "*.css", "*.lua",
+  "*.mjs", "*.mts",
 }
 
 
