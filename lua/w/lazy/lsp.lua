@@ -48,14 +48,14 @@ return {
       cmp_lsp.default_capabilities()
     )
 
-    vim.lsp.config('clangd', {
+    vim.lsp.config("clangd", {
       capabilities = capabilities,
       settings = {
           clangd = {
               arguments = {
-                  '-log=verbose',
-                  '--background-index',
-                  '--query-driver=/usr/bin/clang++', -- Example: specify your compiler if needed
+                  "-log=verbose",
+                  "--background-index",
+                  "--query-driver=/etc/alternatives/c++",
               },
           },
       },
@@ -107,6 +107,19 @@ return {
 
   init = function()
     vim.keymap.set("n", "g?", vim.diagnostic.open_float)
+    vim.keymap.set("n", "<leader>(", function ()
+      vim.diagnostic.jump({ count = -1, float = true })
+    end)
+    vim.keymap.set("n", "<leader>)", function ()
+      vim.diagnostic.jump({ count = 1, float = true })
+    end)
+
+    vim.keymap.set("n", "G?", vim.lsp.buf.hover)
+    vim.keymap.set("n", "gD", vim.lsp.buf.declaration)
+    vim.keymap.set("n", "gd", vim.lsp.buf.definition)
+    vim.keymap.set("n", "gr", vim.lsp.buf.references)
+    vim.keymap.set("n", "gs", vim.lsp.buf.rename)
+
     vim.diagnostic.config({
       float = {
         border = "rounded",
