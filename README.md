@@ -1,3 +1,6 @@
+<img align="right" height="320"
+  src="https://imgs.xkcd.com/comics/tech_loops.png" />
+
 ## Neovim RC
 This is my new RC (w).
 
