@@ -36,7 +36,8 @@ return {
       "mrcjkb/rustaceanvim",
       version = '^6',
       lazy = false,
-    }
+    },
+    "rust-lang/rust.vim"
   },
 
   config = function()
@@ -103,6 +104,8 @@ return {
         },
       },
     }
+
+    vim.g.rustfmt_autosave = true
   end,
 
   init = function()
