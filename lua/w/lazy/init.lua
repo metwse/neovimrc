@@ -1,8 +1,7 @@
 return {
   -- Suda is a plugin to read or write files with sudo command.
-  "lambdalisue/vim-suda",
+  { "lambdalisue/vim-suda", version = "1.*" },
+
   -- Git wrapper.
-  "tpope/vim-fugitive",
-  -- Code documentation built with treesitter.
-  "nvim-treesitter/nvim-tree-docs",
+  { "tpope/vim-fugitive", version = "3.*" },
 }

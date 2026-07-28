@@ -2,24 +2,26 @@
 
 return {
   "nvim-telescope/telescope.nvim",
+  version = "0.2.*",
+
   dependencies = {
     -- A Lua module for asynchronous programming using coroutines.
     "nvim-lua/plenary.nvim",
   },
-  branch = "0.1.x",
-  lazy = false,
 
   opts = {},
 
-  init = function()
+  keys = function()
     local builtin = require("telescope.builtin")
 
-    vim.keymap.set("n", "<leader>ff", builtin.find_files, {})
-    vim.keymap.set("n", "<leader>fl", builtin.live_grep, {})
-    vim.keymap.set("n", "<leader>fh", builtin.help_tags, {})
-    vim.keymap.set("n", "<leader>fb", builtin.buffers, {})
-    vim.keymap.set("n", "<leader>fu", builtin.current_buffer_fuzzy_find, {})
-    vim.keymap.set("n", "<leader>fy", builtin.registers, {})
-    vim.keymap.set("n", "<leader>fa", builtin.builtin, {})
+    return {
+      { "<leader>ff", builtin.find_files, },
+      { "<leader>fl", builtin.live_grep, },
+      { "<leader>fh", builtin.help_tags, },
+      { "<leader>fb", builtin.buffers, },
+      { "<leader>f/", builtin.current_buffer_fuzzy_find, },
+      { "<leader>fy", builtin.registers, },
+      { "<leader>fa", builtin.builtin, },
+    }
   end
 }

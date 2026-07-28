@@ -1,6 +1,7 @@
 return {
   "sainnhe/sonokai",
-  lazy = false,
+  version = "3.*",
+
   priority = 1000,
 
   init = function()

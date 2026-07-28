@@ -2,6 +2,8 @@
 
 return {
   "AckslD/nvim-neoclip.lua",
+  lazy = false,
+
   dependencies = {
     "nvim-telescope/telescope.nvim",
     { "kkharji/sqlite.lua", module = "sqlite" },
@@ -12,26 +14,23 @@ return {
     enable_persistent_history = true,
   },
 
-  init = function()
+  keys = function()
     local telescope = require("telescope")
 
-    local function neoclip_register(register, char)
-      vim.keymap.set(
-        "n", "<leader>y" .. char,
-        telescope.extensions.neoclip[register]
-      )
+    local keys = {
+      { "<leader><leader>y", telescope.extensions.neoclip.unnamed, },
+      { "<leader>y+", telescope.extensions.neoclip.plus, },
+      { "<leader>y*", telescope.extensions.neoclip.star, },
+    }
+
+    local registers = "abcdefghijklmnopqrstuvwxyz123456789"
+
+    for i = 1, #registers do
+      local c = registers:sub(i, 1);
+
+      table.insert(keys, { "<leader>y" .. c, telescope.extensions.neoclip[c] })
     end
 
-    for c in ("abcdefghijklmnopqrstuvwxyz123456789"):gmatch(".") do
-      neoclip_register(c, c)
-    end
-
-    neoclip_register("plus", "+")
-    neoclip_register("star", "*")
-
-    vim.keymap.set(
-      "n", "<leader><leader>y",
-      telescope.extensions.neoclip.unnamed
-    )
-  end
+    return keys
+  end,
 }
