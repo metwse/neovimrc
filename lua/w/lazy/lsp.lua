@@ -2,13 +2,31 @@
 
 return {
   "neovim/nvim-lspconfig",
+  lazy = false,
 
   dependencies = {
     -- Portable package manager for Neovim that runs everywhere Neovim runs.
     -- Install and manage LSP servers, DAP servers, linters, and formatters.
     { "mason-org/mason.nvim", opts = {} },
+
+    -- Extension to mason.nvim that makes it easier to use lspconfig with
+    -- mason.nvim.
+    {
+      "mason-org/mason-lspconfig.nvim",
+      opts = {
+        ensure_installed = { "lua_ls", "pylsp", "clangd" },
+
+        -- Installed servers are enabled with vim.lsp.enable(). Rust is excluded
+        -- because rustaceanvim owns that LSP client.
+        automatic_enable = {
+          exclude = { "rust_analyzer" },
+        },
+      }
+    },
+
     -- Extensible UI for Neovim notifications and LSP progress messages.
     { "j-hui/fidget.nvim", opts = {} },
+
     -- lazydev.nvim is a plugin that properly configures LuaLS for editing
     -- your Neovim config by lazily updating your workspace libraries.
     {
@@ -20,37 +38,39 @@ return {
         },
       },
     },
-    -- Extension to mason.nvim that makes it easier to use lspconfig with
-    -- mason.nvim.
-    "mason-org/mason-lspconfig.nvim",
-    -- Snippet engine.
+
+    -- Rust.
+    {
+      "mrcjkb/rustaceanvim",
+      version = "9.*",
+      lazy = false,
+    },
+    "rust-lang/rust.vim",
+
+    -- Completion.
     "L3MON4D3/LuaSnip",
-    --  luasnip completion source for nvim-cmp.
     "saadparwaiz1/cmp_luasnip",
     "hrsh7th/cmp-nvim-lsp",
     "hrsh7th/cmp-buffer",
     "hrsh7th/cmp-path",
     "hrsh7th/cmp-cmdline",
     "hrsh7th/nvim-cmp",
-    {
-      "mrcjkb/rustaceanvim",
-      version = '^6',
-      lazy = false,
-    },
-    "rust-lang/rust.vim"
   },
 
   config = function()
     local cmp_lsp = require("cmp_nvim_lsp")
 
     local capabilities = vim.tbl_deep_extend(
-      "force", {},
+      "force",
       vim.lsp.protocol.make_client_capabilities(),
       cmp_lsp.default_capabilities()
     )
 
+    -- Neovim 0.12: defaults inherited by every vim.lsp.config definition,
+    -- including the server managed by rustaceanvim.
+    vim.lsp.config("*", { capabilities = capabilities, })
+
     vim.lsp.config("clangd", {
-      capabilities = capabilities,
       settings = {
           clangd = {
               arguments = {
@@ -60,10 +80,6 @@ return {
               },
           },
       },
-    })
-
-    require("mason-lspconfig").setup({
-      ensure_installed = { "lua_ls", "pylsp", "clangd" },
     })
 
     local cmp = require("cmp")
@@ -109,20 +125,6 @@ return {
   end,
 
   init = function()
-    vim.keymap.set("n", "g?", vim.diagnostic.open_float)
-    vim.keymap.set("n", "<leader>(", function ()
-      vim.diagnostic.jump({ count = -1, float = true })
-    end)
-    vim.keymap.set("n", "<leader>)", function ()
-      vim.diagnostic.jump({ count = 1, float = true })
-    end)
-
-    vim.keymap.set("n", "g/", vim.lsp.buf.hover)
-    vim.keymap.set("n", "gD", vim.lsp.buf.declaration)
-    vim.keymap.set("n", "gd", vim.lsp.buf.definition)
-    vim.keymap.set("n", "gr", vim.lsp.buf.references)
-    vim.keymap.set("n", "gs", vim.lsp.buf.rename)
-
     vim.diagnostic.config({
       float = {
         border = "rounded",
@@ -143,6 +145,28 @@ return {
 
       vim.cmd.RustAnalyzer { "restart" }
     end, { nargs = 1 })
+  end,
 
-  end
+  keys = {
+    {
+      "<leader>(",
+      function()
+        vim.diagnostic.jump({ count = -1, float = true })
+      end,
+    },
+
+    {
+      "<leader>)",
+      function()
+        vim.diagnostic.jump({ count = 1, float = true })
+      end,
+    },
+
+    { "g?", vim.diagnostic.open_float, },
+    { "g/", vim.lsp.buf.hover, },
+    { "gd", vim.lsp.buf.declaration, },
+    { "gD", vim.lsp.buf.definition, },
+    { "gr", vim.lsp.buf.references, },
+    { "gs", vim.lsp.buf.rename, },
+  },
 }
