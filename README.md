@@ -2,10 +2,10 @@
   src="https://imgs.xkcd.com/comics/tech_loops.png" />
 
 ## Neovim RC
-This is my new RC (w).
+This is my new RC, for Neovim 0.12.
 
-### Known Issues
-- **No module named `pylsp.plugins.rope_rename`**\
-To fix this, create an empty file at the following location:\
-`~/.local/share/nvim/mason/packages/python-lsp-server/venv/lib/python3.12/site-packages/pylsp/plugins/rope_rename.py`\
-*Note*: The python3.12 part may vary depending on your installed Python version (e.g., python3.11)
+### Plugins
+Plugins are disabled unless explicitly enabled by setting the
+`NVIM_ENABLE_PLUGINS` environment variable (opt-in). If you prefer not to
+install any plugin, you can use configuration without setting the environment
+variable.
