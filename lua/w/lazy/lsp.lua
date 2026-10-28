@@ -120,8 +120,6 @@ return {
         },
       },
     }
-
-    vim.g.rustfmt_autosave = true
   end,
 
   init = function()
